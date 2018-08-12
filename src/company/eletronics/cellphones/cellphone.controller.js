@@ -2,6 +2,7 @@ const service = require('./cellphone.service');
 const { onSuccess, onBadRequest, onError, onCreated, noContent } = require('../../../_shared/handlers/request.handler');
 const objectIdValidate = require('../../../_shared/utils/objectIdValidate');
 
+
 class CellPhoneController {
   async list(ctx) {
     try {
@@ -17,7 +18,8 @@ class CellPhoneController {
       if (objectIdValidate(ctx.params.id)) onBadRequest('Bad format of id');
 
       const res = await service.getById(ctx.params.id)
-      onSuccess(res, {}, ctx);
+      ctx.status = 200;
+      ctx.body = res;
     } catch (err) {
       onError('Error trying to get a cellphone by id', JSON.stringify(err), ctx)
     }
@@ -27,7 +29,7 @@ class CellPhoneController {
     try {
       const { body } = ctx.request;
       if (!body.model || !body.brand || !body.year) {
-        onBadRequest('Missing fields!', ctx);
+        return onBadRequest('Missing fields!', ctx);
       }
 
       await service.create(body);
@@ -41,19 +43,17 @@ class CellPhoneController {
   async update(ctx) {
     try {
 
-      if (objectIdValidate(ctx.params.id)) onBadRequest('Bad format of id');
+      if (objectIdValidate(ctx.params.id)) return onBadRequest('Bad format of id');
 
-      const cellphone = service.getById(ctx.params.id)
+      const cellphone = service.getById(ctx.params.id);
 
       if (!cellphone) onBadRequest('Cellphone not found!');
 
       const { body } = ctx.request;
-      if (body.model || body.brand || body.year || body.description) {
-        onBadRequest('Missing fields!', ctx);
-      }
+      
+      if (!body.model || !body.brand || !body.year || !body.description) return onBadRequest('Missing fields!', ctx);
 
       body.id = ctx.params.id;
-
       await service.update(body);
       noContent(ctx);
     } catch (err) {

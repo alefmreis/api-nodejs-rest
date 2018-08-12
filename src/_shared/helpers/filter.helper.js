@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 class Filter {
   build(query = {}) {    
     const filters = query;

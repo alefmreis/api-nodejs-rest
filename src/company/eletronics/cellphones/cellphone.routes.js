@@ -3,7 +3,7 @@ const controller = require('./cellphone.controller');
 
 const routes = new Router();
 
-routes.prefix('/api/celulares');
+routes.prefix('/api/eletronicos/celulares');
 routes.get('/', controller.list);
 routes.get('/find', controller.list);
 routes.get('/:id', controller.getById);
