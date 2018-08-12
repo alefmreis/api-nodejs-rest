@@ -1,4 +1,4 @@
-const Database = require('../../data/database');
+const Database = require('../../../_shared/data/database');
 const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
 const mongooseTimeStamp = require('mongoose-timestamp');

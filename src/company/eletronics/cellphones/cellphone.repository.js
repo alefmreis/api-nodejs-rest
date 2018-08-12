@@ -7,8 +7,11 @@ class CellPhoneRepository {
       .find(query)
       .limit(paging.limit)
       .skip(paging.skip)
-      .sort(paging.sort)
       .lean();
+  }
+
+  count(query = {}) {
+    return CellPhone.countDocuments(query);
   }
 
   findById(id) {
