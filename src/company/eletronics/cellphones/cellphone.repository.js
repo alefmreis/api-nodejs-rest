@@ -37,6 +37,10 @@ class CellPhoneRepository {
   updateStatus(id, status) {
     return CellPhone.update({ _id: id }, { $set: { sold: status } });
   }
+
+  delete(id) {
+    return CellPhone.delete({ _id: id });
+  }
 }
 
 module.exports = new CellPhoneRepository();
