@@ -9,7 +9,7 @@ class CellPhoneController {
       const res = await service.list(ctx.query);
       onSuccess(res.data, res.meta, ctx);
     } catch (err) {
-      onError('Error trying to list cellphones', JSON.stringify(err), ctx);
+      onError('Error trying to list cellphones', err.toString(), ctx);
     }
   }
 
@@ -17,11 +17,11 @@ class CellPhoneController {
     try {
       if (objectIdValidate(ctx.params.id)) onBadRequest('Bad format of id');
 
-      const res = await service.getById(ctx.params.id)
+      const res = await service.getById(ctx.params.id);
       ctx.status = 200;
       ctx.body = res;
-    } catch (err) {
-      onError('Error trying to get a cellphone by id', JSON.stringify(err), ctx)
+    } catch (err) {      
+      onError('Error trying to get a cellphone by id', err.toString(), ctx);
     }
   }
 
@@ -35,7 +35,7 @@ class CellPhoneController {
       await service.create(body);
       onCreated(ctx);
     } catch (err) {
-      onError('Error trying to create cellphone', JSON.stringify(err), ctx);
+      onError('Error trying to create cellphone', err.toString(), ctx);
     }
   }
 
@@ -57,7 +57,7 @@ class CellPhoneController {
       await service.update(body);
       noContent(ctx);
     } catch (err) {
-      onError('Error trying to update cellphone', JSON.stringify(err), ctx);
+      onError('Error trying to update cellphone', err.toString(), ctx);
     }
   }
 
@@ -78,7 +78,7 @@ class CellPhoneController {
       await service.updateStatus(ctx.params.id, status);
       noContent(ctx);
     } catch (err) {
-      onError('Error trying to update a cellphone status', JSON.stringify(err), ctx);
+      onError('Error trying to update a cellphone status', err.toString(), ctx);
     }
   }
 
@@ -88,7 +88,7 @@ class CellPhoneController {
       await service.delete(ctx.params.id);
       noContent(ctx);
     } catch (err) {
-      onError('Error trying to delete cellphone', JSON.stringify(err), ctx);
+      onError('Error trying to delete cellphone', err.toString(), ctx);
     }
   }
 }

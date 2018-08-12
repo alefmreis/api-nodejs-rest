@@ -13,8 +13,10 @@ class CellPhoneService {
     return { data, meta: pagination.resolve(paginate, total) };
   }
 
-  getById(id) {
-    return repository.findById(id);
+  async getById(id) {
+    const cellphone = await repository.findById(id);
+    if (!cellphone) throw new Error('Cellphone not exist!');
+    return cellphone;
   }
 
   create(obj) {
