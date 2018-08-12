@@ -21,10 +21,10 @@ class UserController {
 
       if (!body.email || !body.password) throw new Error('Missing fields! check if email or password');
 
-      const res = service.login(body);
+      const res = await service.login(body);
 
       ctx.status = 200;
-      ctx.body = res;
+      ctx.body = { data: res };
     } catch (err) {
       onError('Error trying to login', err.toString(), ctx);
     }

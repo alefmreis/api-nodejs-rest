@@ -5,7 +5,7 @@ const { secret } = require('../enviroments');
 
 class Auth {
 
-  static isLoggedIn(ctx) {
+  static async isLoggedIn(ctx, next) {
 
     const { authorization } = ctx.request.headers;
 
@@ -17,17 +17,19 @@ class Auth {
       return ctx;
     }
 
-    jwt.verify(authorization, secret, (err, decode) => {
+    const validate = jwt.verify(authorization, secret, (err, decode) => {
       if (err) {
+        ctx.status = 401;
         ctx.body = {
-          status: 401,
           message: err.message
         };
+        return;
       }
-      return decode;
+      ctx.user = decode.data;
     });
 
-    return true;
+    if (!validate) return;
+    await next();
   }
 }
 
