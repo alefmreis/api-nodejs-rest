@@ -1,5 +1,5 @@
 const service = require('./cellphone.service');
-const { onSuccess, onBadRequest, onError, onCreated, noContent } = require('../../../_shared/handlers/index');
+const { onSuccess, onBadRequest, onError, onCreated, noContent } = require('../../../_shared/handlers/request.handler');
 const objectIdValidate = require('../../../_shared/utils/objectIdValidate');
 
 class CellPhoneController {
